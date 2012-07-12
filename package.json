@@ -20,5 +20,6 @@
   "license": "BSD",
   "dependencies":{
     "mocha":"*"
+    , "urlparse":"0.0.1"
   }
 }

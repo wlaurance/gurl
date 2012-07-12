@@ -1,6 +1,12 @@
-exec = require('child_process').exec
+spawn = require('child_process').spawn
+
+pipe = (t)->
+  t.stdout.on 'data', (da)->
+    console.log da.toString()
+
 task 'watch', 'watch the coffee', ->
-  exec 'coffee -o lib/ -cw coffee/*.coffee'
+  t = spawn 'coffee', ['-o', 'lib', '-cw',  'coffee']
+  pipe t
 
 
 
