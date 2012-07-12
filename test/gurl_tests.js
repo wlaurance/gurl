@@ -11,4 +11,11 @@ describe('Gurl', function() {
       });
     });
   });
+  it('should replace non self referencial urls with target="_blank"', function(done){
+    var testArticle = require('./test_article');
+    gurl.processArticle(testArticle, function(processed){
+      console.log(processed);
+      done();
+    });
+  });
 });
