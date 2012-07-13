@@ -19,6 +19,8 @@ describe('Gurl', function() {
           assert.equal(href.indexOf('target="_blank"'), -1);
         else
           assert.notEqual(href.indexOf('target="_blank"'), -1);
+        console.log(processed);
+        done();
       });
     });
   });
