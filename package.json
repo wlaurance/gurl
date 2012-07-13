@@ -1,6 +1,6 @@
 {
   "name": "gurl",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Glog plugin to format article urls",
   "main": "gurl.js",
   "scripts": {
@@ -18,9 +18,9 @@
   ],
   "author": "Will S. Laurance",
   "license": "BSD",
-  "dependencies":{
-    "mocha":"*"
-    , "urlparse":"0.0.1"
-    , "async":"0.1.22"
+  "dependencies": {
+    "mocha": "*",
+    "urlparse": "0.0.1",
+    "async": "0.1.22"
   }
 }
