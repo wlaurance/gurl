@@ -2,7 +2,7 @@
   "name": "gurl",
   "version": "0.0.1",
   "description": "Glog plugin to format article urls",
-  "main": "gurl.js",
+  "main": "./lib/gurl.js",
   "scripts": {
     "test": "make test"
   },
