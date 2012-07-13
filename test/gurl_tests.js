@@ -14,8 +14,12 @@ describe('Gurl', function() {
   it('should replace non self referencial urls with target="_blank"', function(done){
     var testArticle = require('./test_article');
     gurl.processArticle(testArticle, function(processed){
-      console.log(processed);
-      done();
+      processed.replace(/(<a href="([^"]+)">([^<]+)<\/a>)/g, function(href){
+        if(href.indexOf('wlaurance.com') != -1)
+          assert.equal(href.indexOf('target="_blank"'), -1);
+        else
+          assert.notEqual(href.indexOf('target="_blank"'), -1);
+      });
     });
   });
 });

@@ -3,7 +3,6 @@ urlparse = require 'urlparse'
 class Gurl
   constructor:()->
     @nonSelfRefURLS = true
-    @anchorList = []
 
   load:(glog)->
     glog.registerPostArticleHook (articles, cb)=>
@@ -13,13 +12,16 @@ class Gurl
   processArticles:(articles, cb)->
 
   processArticle:(article, cb)->
-    @appendAnchorList article, =>
-      cb(@anchorList)
+    @appendAnchorList article, (anchors)=>
+      for href in anchors
+        console.log href
+      cb article
 
   appendAnchorList:(article, cb)->
+    anchors = []
     article.replace /(<a href="([^"]+)">([^<]+)<\/a>)/g, (href)=>
-      @anchorList.push href
-    cb()
+      anchors.push href
+    cb(anchors)
 
   isSelfRefURL:(url, cb)->
     fs.readFile __dirname + '/../config.json', (error, data)->
