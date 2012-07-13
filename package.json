@@ -1,6 +1,6 @@
 {
   "name": "gurl",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Glog plugin to format article urls",
   "main": "./lib/gurl.js",
   "scripts": {
