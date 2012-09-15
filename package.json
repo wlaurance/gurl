@@ -19,8 +19,11 @@
   "author": "Will S. Laurance",
   "license": "BSD",
   "dependencies": {
-    "mocha": "*",
     "urlparse": "0.0.1",
     "async": "0.1.22"
+  },
+  "devDependencies": {
+    "mocha": "*"
+    , "colors":"*"
   }
 }
