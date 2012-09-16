@@ -1,34 +1,42 @@
-fs = require 'fs'
-urlparse = require 'urlparse'
-async = require 'async'
-
+try
+  fs = require 'fs'
+  urlparse = require 'urlparse'
+  async = require 'async'
+catch e
+  console.error e
 class Gurl
   constructor:()->
     @nonSelfRefURLS = true
+    @articles = []
 
   load:(glog)->
     glog.registerPostArticleHook (articles, cb)=>
-      @processArticles articles, (processedArticles)->
-        cb null, processedArticles
+      @articles = []
+      async.forEach articles, @processArticle, (error)=>
+        cb null, @articles
 
-  processArticles:(articles, cb)->
-
-  processArticle:(article, cb)->
-    @appendAnchorList article, (anchors)=>
+  processArticle:(article, cb)=>
+    @appendAnchorList article.body, (anchors)=>
       iterator = (href, icb)=>
-        href.replace /(http(s)?:d)?(([^:\s]+)\.(com|net|org))/gi, (url)=>
+        href = '' if href is undefined
+        href.replace /(http(s)?:d)?(([^:\s]+)\.(\w)+)/g, (url)=>
           @isSelfRefURL url, (well)=>
             if well is false
               newhref = String href
               newhref = newhref.replace '<a', '<a target="_blank"'
-              article = article.replace href, newhref
+              article.body = article.body.replace href, newhref
             icb()
-      async.forEach anchors, iterator, (error)->
-        cb article
+      if anchors.length isnt 0
+        async.forEachSeries anchors, iterator, (error)=>
+          @articles.push article
+          cb(error)
+      else
+        @articles.push article
+        cb('')
 
-  appendAnchorList:(article, cb)->
+  appendAnchorList:(body, cb)->
     anchors = []
-    article.replace /(<a href="([^"]+)">([^<]+)<\/a>)/g, (href)=>
+    body.replace /(<a href="([^"]+)">([^<]+)<\/a>)/g, (href)=>
       anchors.push href
     cb(anchors)
 
@@ -42,7 +50,7 @@ class Gurl
         else
           cb false
       catch e
+        console.log e
         throw e
-    
 
 module.exports = new Gurl
